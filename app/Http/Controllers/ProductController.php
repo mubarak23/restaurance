@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Session;
 use App\Product;
 
@@ -48,7 +48,7 @@ class ProductController extends Controller
         $new_product = new Product();
         $new_product->name = $request['name'];
         $new_product->price = $request['price'];
-        $new_product->user_id = Auth::user()->id;
+        $new_product->user_id = Auth::id();
         if ($request->hasFile('image')) {
             $originalImage = $request->file('image');
             $orignalPath = public_path() . '/images/products';
