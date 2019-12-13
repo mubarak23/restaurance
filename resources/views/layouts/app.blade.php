@@ -33,7 +33,10 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-
+                    <li><a href="{{ url('/') }}">Home</a></li>
+                    @if (!Auth::guest())
+                        <li><a href="{{ route('post.create') }}">Add Product</a><li>
+                    @endif
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -71,10 +74,20 @@
                 </div>
             </div>
         </nav>
-
+        @if(Session::has('flash_message'))
+            <div class="container">
+                <div class="alert alert-success"><em> { !! session('flash_message') }</em></div>
+            </div>
+        @endif
+        <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+        @includes ('error.list')
+        </div>
+        </div>
         <main class="py-4">
             @yield('content')
         </main>
     </div>
+    <script src="{{ asset('js/app.js') }}"></script>
 </body>
 </html>
