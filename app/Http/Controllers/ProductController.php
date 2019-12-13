@@ -41,7 +41,20 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         //
-        
+        $this->validate($request, [
+            'name' => 'required|max:100',
+            'price' => 'required'
+        ]);
+        $new_product = new Product();
+        $new_product->name = $request['name'];
+        $new_product->price = $request['price'];
+        $new_product->user_id = Auth::user()->id;
+        if ($request->hasFile('image')) {
+            $originalImage = $request->file('image');
+            $orignalPath = public_path() . '/images/products';
+            $img_name = time() . $originalImage->getClientOriginalName();
+            $new_product->image = $img_name;
+        }
     }
 
     /**
