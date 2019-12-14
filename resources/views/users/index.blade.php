@@ -31,7 +31,7 @@
                     <td>{{  $user->roles()->pluck('name')->implode(' ') }}</td>{{-- Retrieve array of roles associated to a user and convert to string --}}
                     <td>
                     <a href="{{ route('users.edit', $user->id) }}" class="btn btn-info pull-left" style="margin-right: 3px;">Edit</a>
-                    <a href="{{ route('section.product', ['id' => $user->id]) }}" class="btn btn-danger pull-left"></a>
+                    <a href="{{ route('userd.delete', ['id' => $user->id]) }}" class="btn btn-danger pull-left">Delete</a>
 
                     </td>
                 </tr>

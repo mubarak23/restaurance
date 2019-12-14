@@ -9,20 +9,21 @@
 
     <form method="post" action = {{ route('users.create')}}>
         <div class="form-group">
-            <label for="product name">UserName</label>
+            <label for="product name">Username</label>
             <input type="text" name="name" class="form-control" placeholder="Enter Username Here"  />
         </div>
         <div class="form-group">
             <label for="Email Address">Email</label>
             <input type="text" name="email" class="form-control" placeholder="Enter Email Address"  />
         </div>
-
-        <div class="form-group">
+         <div class="form-check">
          @foreach ($roles as $role)
-            <label for="role">Email</label>
-            <input type="checkbox" name="email" class="form-control"  />
-         @endforeach
-        </div>
+        <input class="form-check-input" type="checkbox" value="" id={{ $role->id }}>
+        <label class="form-check-label" for={{ $role->name }}>
+            {{ ucfirst($role->name)) }}
+        </label>
+        @endforeach
+        </div>   
         <div class="form-group">
             <label for="password">Password</label>
             <input type="password" name="password" class="form-control" placeholder="Enter Password"  />
@@ -32,7 +33,7 @@
             <input type="password" name="password_confirmation" class="form-control" placeholder="Enter Password"  />
         </div>
           {{ csrf_filed() }}
-        <button type="submit" class="btn btn-primary" name="submit">Add Product</button>       
+        <button type="submit" class="btn btn-primary" name="submit">Add User</button>       
     </form>
 </div>
 

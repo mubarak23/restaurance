@@ -26,3 +26,6 @@ Route::resource('product', 'ProductController');
 Route::resource('user', 'UserController');
 
 
+Route::resource('permissions', 'PermissionController');
+
+
