@@ -50,11 +50,15 @@ class ProductController extends Controller
         $new_product->price = $request['price'];
         $new_product->user_id = Auth::id();
         if ($request->hasFile('image')) {
+            Cloudder::upload($request->file('image'));
+            $cloundary_upload = Cloudder::getResult();
             $originalImage = $request->file('image');
             $orignalPath = public_path() . '/images/products';
             $img_name = time() . $originalImage->getClientOriginalName();
             $new_product->image = $img_name;
         }
+        $new_product->save();
+        return redirect()->route('product.index')->with('flash_message', 'Product add Successfully');
     }
 
     /**
