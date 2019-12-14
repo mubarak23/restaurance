@@ -1,14 +1,19 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Session;
-use App\Product;
+use App\User;
+use Auth;
 
-class ProductController extends Controller
+use session;
+
+class UserController extends Controller
 {
+    public function __constructor(){
+        $this->middleware(['auth', 'isAdmin']);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -17,8 +22,9 @@ class ProductController extends Controller
     public function index()
     {
         //
-        $products = Product::orderby('id', 'desc')->paginate(5);
-        return view('procuts.index', compact($products));
+        $users = User::all();
+        return view('users.index')->with('users', $users);
+
     }
 
     /**
@@ -29,7 +35,8 @@ class ProductController extends Controller
     public function create()
     {
         //
-        return view('products.create');
+        $roles = Roles::get();
+        return view('users.create', ['roles' =>$roles]);
     }
 
     /**
@@ -42,23 +49,19 @@ class ProductController extends Controller
     {
         //
         $this->validate($request, [
-            'name' => 'required|max:100',
-            'price' => 'required'
+            'name'=> 'required|max:90',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:6|confirmed'
         ]);
-        $new_product = new Product();
-        $new_product->name = $request['name'];
-        $new_product->price = $request['price'];
-        $new_product->user_id = Auth::id();
-        if ($request->hasFile('image')) {
-            Cloudder::upload($request->file('image'));
-            $cloundary_upload = Cloudder::getResult();
-            $originalImage = $request->file('image');
-            $orignalPath = public_path() . '/images/products';
-            $img_name = time() . $originalImage->getClientOriginalName();
-            $new_product->image = $img_name;
+        $user = User::create($request->only('name', 'email', 'password'));
+
+        if(isset($roles)){
+            foreach($roles as $role){
+                $user_role = Role::where('id', '=', $role)->firstOrFail();
+                $user->assignRole($user_role);
+            }
         }
-        $new_product->save();
-        return redirect()->route('product.index')->with('flash_message', 'Product add Successfully');
+        return redirect()->route('users.index')->with('flash_message', 'User Added Successfully');
     }
 
     /**
