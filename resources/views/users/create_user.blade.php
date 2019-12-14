@@ -16,7 +16,14 @@
             <label for="Email Address">Email</label>
             <input type="text" name="email" class="form-control" placeholder="Enter Email Address"  />
         </div>
-
+         <div class="form-check">
+         @foreach ($roles as $role)
+        <input class="form-check-input" type="checkbox" value="" id={{ $role->id }}>
+        <label class="form-check-label" for={{ $role->name }}>
+            {{ ucfirst($role->name)) }}
+        </label>
+        @endforeach
+        </div>   
         <div class="form-group">
          @foreach ($roles as $role)
             <label for="role">Email</label>
