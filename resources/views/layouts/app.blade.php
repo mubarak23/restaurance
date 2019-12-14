@@ -11,6 +11,7 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -81,7 +82,7 @@
         @endif
         <div class="row">
         <div class="col-md-8 col-md-offset-2">
-        @includes ('error.list')
+        @include('errors.lists')
         </div>
         </div>
         <main class="py-4">
