@@ -84,6 +84,10 @@ class UserController extends Controller
     public function edit($id)
     {
         //
+        $user = User::findOrFail($id);
+        $roles = Role::get();
+        return view('users.edit', compact('user', 'roles'));
+
     }
 
     /**
@@ -96,6 +100,25 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $user = User::findOrFail($id);
+        $this->validate($request, [
+            'name'=> 'required|max:90',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:6|confirmed'
+        ]);
+
+        $input = $request->only(['name', 'email', 'password']);
+        $roles = $request['roles'];
+        $user->fill($user)->save();
+
+        if(isset($roles)){
+            $user->role->sync($roles);
+        }else{
+            $user->roles()->detach();
+        }
+
+        return redirect()->route('users.index')->with('flash_message', 'User Upated Successfully');
+
     }
 
     /**
@@ -107,5 +130,9 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
+        $user = User::findOrFail($id);
+        $user->delete();
+        return redirect()->route('users.index')->with('flash_message', 'User Deleted Successfully');
+        
     }
 }
