@@ -24,7 +24,7 @@
                 <tr>
                     <td>{{ $permission->name }}</td> 
                     <td>
-                    <a href="{{ route('permissions.edit', ['permissions.destroy', $permission->id]) }}" class="btn btn-info pull-left" style="margin-right: 3px;">Edit</a>
+                    <a href="{{ route('permissions.edit', ['permissions.edit', $permission->id]) }}" class="btn btn-info pull-left" style="margin-right: 3px;">Edit</a>
                     <a href="{{ route('permissions.delete', ['permissions.destroy', $permission->id]) }}" class="btn btn-danger pull-left">Delete</a>
                     </td>
                 </tr>

@@ -1,12 +1,10 @@
 <?php
+namespace App\Http\Controllers;
+use Illuminate\Http\Request;
+use Auth;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
-use Auth;
-
-use session;
-namespace App\Http\Controllers;
-
-use Illuminate\Http\Request;
+use Session;
 
 class RoleController extends Controller
 {
@@ -86,6 +84,10 @@ class RoleController extends Controller
     public function edit($id)
     {
         //
+        $role = Role::findOrFail($id);
+        $permissions = Permission::all();
+
+        return view('roles.edit', compact('role', 'permissions'));
     }
 
     /**
@@ -98,6 +100,32 @@ class RoleController extends Controller
     public function update(Request $request, $id)
     {
         //
+        
+        $role = Role::findOrFail($id);//Get role with the given id
+    //Validate name and permission fields
+        $this->validate($request, [
+            'name'=>'required|max:10|unique:roles,name,'.$id,
+            'permissions' =>'required',
+        ]);
+
+        $input = $request->except(['permissions']);
+        $permissions = $request['permissions'];
+        $role->fill($input)->save();
+
+        $p_all = Permission::all();//Get all permissions
+
+        foreach ($p_all as $p) {
+            $role->revokePermissionTo($p); //Remove all permissions associated with role
+        }
+
+        foreach ($permissions as $permission) {
+            $p = Permission::where('id', '=', $permission)->firstOrFail(); //Get corresponding form //permission in db
+            $role->givePermissionTo($p);  //Assign permission to role
+        }
+
+        return redirect()->route('roles.index')
+            ->with('flash_message',
+             'Role'. $role->name.' updated!');
     }
 
     /**
@@ -109,5 +137,11 @@ class RoleController extends Controller
     public function destroy($id)
     {
         //
+        $role = Role::findOrFail($id);
+        $role->delete();
+
+        return redirect()->route('roles.index')
+            ->with('flash_message',
+             'Role deleted!');
     }
 }

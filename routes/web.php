@@ -29,3 +29,7 @@ Route::resource('user', 'UserController');
 Route::resource('permissions', 'PermissionController');
 
 
+Route::resource('roles', 'RoleController');
+
+
+
