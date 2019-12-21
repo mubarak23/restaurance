@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use JD\Cloudder\Facades\Cloudder;
 use Session;
 use App\Product;
 
@@ -41,26 +42,36 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         //
+        //$originalImage = $request->file('image');
+        //$path = $request->file('image')->store('images');
+
+        //return $path;
+
+            //$orignalPath = public_path() . '/images/products';
+            //$img_name = time() . $originalImage->getClientOriginalName();
+            //return $img_name;
+        //return 'Good Herer';
+        
         $this->validate($request, [
             'name' => 'required|max:100',
             'price' => 'required'
         ]);
-        $new_product = new Product();
-        $new_product->name = $request['name'];
-        $new_product->price = $request['price'];
-        $new_product->rating = 0;
-        $new_product->user_id = Auth::id();
-        $new_product->image_url = 'Default Test URL';
+        //$new_product = new Product();
+        //$new_product->name = $request['name'];
+       // $new_product->price = $request['price'];
+        //$new_product->rating = 0;
+        //$new_product->user_id = Auth::id();
+        
         if ($request->hasFile('image')) {
-            return 'Good From Here';
+            //return 'Good From Here';
             Cloudder::upload($request->file('image'));
             $cloundary_upload = Cloudder::getResult();
             $originalImage = $request->file('image');
             $orignalPath = public_path() . '/images/products';
             $img_name = time() . $originalImage->getClientOriginalName();
-            $new_product->image_url = $img_name;
+           // $new_product->image_url = $img_name;
         }
-        $new_product->save();
+        //$new_product->save();
         return redirect()->route('product.index')->with('flash_message', 'Product add Successfully');
     }
 
