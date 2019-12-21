@@ -5,7 +5,7 @@
     <div class="row">
         @foreach($products as $product)
         <div class="col-md-3 col-6 mar">
-            <a href="{{ route('product.show', ['id' => $product->id]) }}"><img src="{{ $product->image }}" class="image" alt="Product Poster"></a>
+            <a href="{{ URL::to('product/'.$product->id.'/show')}}"><img src="{{ $product->image }}" class="image" alt="Product Poster"></a>
             <div class="description">
                 <b>{{ $product->name}}</b><span class="badge badge-success"> {{ $product->rating }} </span>
                 <br>Rs. {{ $product->price }}

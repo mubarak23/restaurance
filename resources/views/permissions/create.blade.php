@@ -11,7 +11,7 @@
 
     {{ Form::open(array('url' => 'permissions')) }}
 
-    <form method="post" action = {{ route('permissions.create')}}>
+    <form enctype="multipart/form-data" method="post" action = {{ route('permissions.create')}} >
     <br>
     @if(!$roles->isEmpty()) //If no roles exist yet
         <h4>Assign Permission to Roles</h4>
