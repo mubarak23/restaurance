@@ -36,7 +36,7 @@
                     <ul class="navbar-nav mr-auto">
                     <li><a href="{{ url('/') }}">Home</a></li>
                     @if (!Auth::guest())
-                        <li><a href="{{ route('post.create') }}">Add Product</a><li>
+                        <li><a href="{{ route('product.create') }}">Add Product</a><li>
                     @endif
                     </ul>
 
