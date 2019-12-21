@@ -18,7 +18,7 @@ class ProductController extends Controller
     {
         //
         $products = Product::orderby('id', 'desc')->paginate(5);
-        return view('procuts.index', compact($products));
+        return view('products.index')->with('products', $products);
     }
 
     /**
