@@ -61,14 +61,22 @@ class ProductController extends Controller
        // $new_product->price = $request['price'];
         //$new_product->rating = 0;
         //$new_product->user_id = Auth::id();
+        $data = $request->all();
         
         if ($request->hasFile('image')) {
             //return 'Good From Here';
             Cloudder::upload($request->file('image'));
             $cloundary_upload = Cloudder::getResult();
-            $originalImage = $request->file('image');
-            $orignalPath = public_path() . '/images/products';
-            $img_name = time() . $originalImage->getClientOriginalName();
+            $new_product = new Product();
+            $new_product->name = $data['name'] ;
+            $new_product->price = $data['price'];
+            $new_product->user_id = Auth::id();
+            $new_product->rating = 0;
+            $new_product->image_url = $cloundary_upload['url'];
+            $new_product->save(); 
+            //$originalImage = $request->file('image');
+            //$orignalPath = public_path() . '/images/products';
+            //$img_name = time() . $originalImage->getClientOriginalName();
            // $new_product->image_url = $img_name;
         }
         //$new_product->save();
