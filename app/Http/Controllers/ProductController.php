@@ -92,6 +92,9 @@ class ProductController extends Controller
     public function show($id)
     {
         //
+        //echo "Good Here";
+        $product = Product::where('id', '=', $id)->first();
+        return view('products.product', ['product' => $product]);
     }
 
     /**
@@ -103,6 +106,7 @@ class ProductController extends Controller
     public function edit($id)
     {
         //
+        echo "Good Here";
     }
 
     /**
