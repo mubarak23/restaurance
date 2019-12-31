@@ -18,7 +18,11 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-
+Route::post('review/{id}/',[
+    'uses' => 'ReviewController@store',
+    'as' => 'write',
+    'middleware' => 'auth'
+]);
 
 Route::resource('product', 'ProductController');
 
@@ -30,6 +34,8 @@ Route::resource('permissions', 'PermissionController');
 
 
 Route::resource('roles', 'RoleController');
+
+
 
 
 
