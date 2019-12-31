@@ -47,7 +47,7 @@ class ReviewController extends Controller
         $add_review->rating = \mt_rand(10, 50)/10;
         $add_review->user_id = Auth::id();
         $add_review->product_id = $id;
-        $review->save();
+        $add_review->save();
         
         $rating = Review::where('product_id', '=', $id)->avg('rating');
          
