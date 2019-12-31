@@ -8,6 +8,12 @@ class Product extends Model
 {
     //
     protected $fillable = [
-        'name', 'price'
+        'name', 'price', 'rating'
     ];
+
+    public function review(){
+        return $this->hasMany('App\Review');
+    }
+
+    
 }
