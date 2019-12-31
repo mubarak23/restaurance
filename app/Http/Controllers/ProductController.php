@@ -93,7 +93,7 @@ class ProductController extends Controller
     {
         //
         //echo "Good Here";
-        $product = Product::where('id', '=', $id)->first();
+        $product = Product::where('id', '=', $id)->with('review.user')->first();
         return view('products.product', ['product' => $product]);
     }
 

@@ -14,7 +14,9 @@
                 
             </div>
         </div>
-         <hr> @if(Session::has('info'))
+        
+
+     <hr> @if(Session::has('info'))
         <div class="alert alert-success text-center" style="margin:20px;">
             {{ Session::get('info') }}
         </div>
@@ -31,7 +33,7 @@
 
                 @else
                 <form action="{{ route('write', ['id' => $product->id ]) }}" method="post">
-                    @include('partials.errors')
+                    @include('errors.review')
                     <div class="form-group">
                         <label for="reviewbox">
                             <h5>Your Review</h5>
@@ -50,19 +52,23 @@
 
             <div class="col-md-6" id="review">
                 <h5>Previous Reviews</h5>
-                @foreach ($product->reviews as $review)
+                @foreach ($product->review as $data)
                 <div class="card bg-light mycard">
                     <div class="card-body">
-                        <h5 class="card-title">{{ $review->user->name }} &nbsp; &nbsp;
-                            <span class="badge badge-success">{{ $review->rating }}</span>
+                        <h5 class="card-title">{{ $data->user->name }} &nbsp; &nbsp;
+                            <span class="badge badge-success">{{ $data->rating }}</span>
                         </h5>
-                        <p class="card-text">{{ $review->review }}</p>
+                        <p class="card-text">{{ $data->review }}</p>
                     </div>
                 </div>
                 @endforeach
 
             </div>
         </div>
+
+
+
+
     </div>
 </div>
 
