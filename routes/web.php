@@ -24,6 +24,8 @@ Route::post('review/{id}/',[
     'middleware' => 'auth'
 ]);
 
+
+
 Route::resource('product', 'ProductController');
 
 

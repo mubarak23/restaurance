@@ -34,9 +34,9 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-                    <li><a href="{{ url('/') }}">Home</a></li>
+                    <li class="nav-item nav-link"><a href="{{ url('/') }}">Home</a></li>
                     @if (!Auth::guest())
-                        <li><a href="{{ route('product.create') }}">Add Product</a><li>
+                        <li class="nav-item nav-link"><a href="{{ route('product.create') }}">Add Product</a><li>
                     @endif
                     </ul>
 

@@ -80,6 +80,7 @@ class ProductController extends Controller
            // $new_product->image_url = $img_name;
         }
         //$new_product->save();
+        //return $cloundary_upload;
         return redirect()->route('product.index')->with('flash_message', 'Product add Successfully');
     }
 
